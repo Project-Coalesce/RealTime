@@ -1,0 +1,5 @@
+name: RealTime
+version: 1.0
+main: com.coalesce.realtime.RealTimePlugin
+author: ProjectCoalesce
+depend: [CoalesceCore]
