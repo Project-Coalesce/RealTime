@@ -22,4 +22,11 @@ public class RealTimePlugin extends CoPlugin {
 					timeModule);
 	}
 
+	public LocationModule getLocationModule() {
+		return locationModule;
+	}
+
+	public TimeModule getTimeModule() {
+		return timeModule;
+	}
 }

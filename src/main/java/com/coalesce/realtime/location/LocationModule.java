@@ -3,6 +3,7 @@ package com.coalesce.realtime.location;
 import com.coalesce.http.CoHTTP;
 import com.coalesce.plugin.CoModule;
 import com.coalesce.plugin.CoPlugin;
+import com.coalesce.realtime.RealTimePlugin;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
 import org.bukkit.Bukkit;
@@ -65,6 +66,7 @@ public class LocationModule extends CoModule {
 
 	private void loadLocationData(Player player){
 
+		getPlugin().getCoLogger().debug("Downloaded player location");
 		ListenableFuture<String> future = CoHTTP.sendGet(LOCATION_API_URL + player.getAddress().getAddress().getHostAddress(), getPlugin().getDisplayName() + " Spigot Plugin");
 
 		future.addListener(() -> {
@@ -72,6 +74,8 @@ public class LocationModule extends CoModule {
 			try {
 				LocationData data = new Gson().fromJson(future.get(), LocationData.class);
 				locationDataMap.put(player.getUniqueId(), data);
+				//Load in the players time data
+				((RealTimePlugin)getPlugin()).getTimeModule().loadTimeData(player.getUniqueId(), data);
 
 			} catch (InterruptedException | ExecutionException e) {
 				e.printStackTrace();
