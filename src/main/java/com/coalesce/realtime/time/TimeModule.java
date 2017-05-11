@@ -13,7 +13,7 @@ import java.util.*;
 
 public class TimeModule extends CoModule {
 
-	HashMap<UUID, Calendar> timezomeCalendars;
+	private HashMap<UUID, Calendar> timezomeCalendars;
 
 	private BukkitTask timeUpdater;
 
@@ -58,8 +58,6 @@ public class TimeModule extends CoModule {
 		Player player = Bukkit.getPlayer(uuid);
 		timezoneCalendar.setTimeInMillis(System.currentTimeMillis());
 
-		getPlugin().getCoLogger().debug("Updated Player time");
-
 		final int minsIntoDay = (timezoneCalendar.get(Calendar.HOUR_OF_DAY) * 60) + timezoneCalendar.get(Calendar.MINUTE);
 		final long newTime = MINECRAFT_MIDNIGHT + ((minsIntoDay * MINECRAFT_DAY_LENGTH) / MINS_PER_DAY);
 
@@ -78,6 +76,10 @@ public class TimeModule extends CoModule {
 		timezomeCalendars.put(uuid, calendar);
 
 		updatePlayerTime(uuid, calendar);
+	}
+
+	public HashMap<UUID, Calendar> getTimezomeCalendars() {
+		return timezomeCalendars;
 	}
 
 	@EventHandler

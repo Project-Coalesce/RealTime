@@ -66,7 +66,6 @@ public class LocationModule extends CoModule {
 
 	private void loadLocationData(Player player){
 
-		getPlugin().getCoLogger().debug("Downloaded player location");
 		ListenableFuture<String> future = CoHTTP.sendGet(LOCATION_API_URL + player.getAddress().getAddress().getHostAddress(), getPlugin().getDisplayName() + " Spigot Plugin");
 
 		future.addListener(() -> {
